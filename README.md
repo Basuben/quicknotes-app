@@ -32,7 +32,7 @@ There is nothing to install.
 
 ## What I learned
 
-- Keeping the notes in one array and rebuilding the list with `render()` is simpler than changing the page piece by piece. Every change updates the array first, then the page follows.
-- Using `createElement` and `textContent` instead of `innerHTML` means whatever a user types is shown as plain text and can never run as code.
-- `localStorage` only stores text, so the array has to go through `JSON.stringify` when saving and `JSON.parse` when loading.
-- A media query can change the whole layout on small screens. Switching the form to `flex-direction: column` stacked the controls neatly on a phone.
+- I learned to handle form submissions with JavaScript and use `event.preventDefault()` to stop the page from reloading when I add a note.
+- I practiced saving and loading data with `localStorage`. Since it stores text, I used `JSON.stringify()` to save my notes and `JSON.parse()` to read them back.
+- I learned to keep the notes in a data array and call `render()` to update the page whenever that data changes.
+- I used `textContent` instead of `innerHTML` to display note text as plain text, which helps prevent user input from being interpreted as HTML or script.
