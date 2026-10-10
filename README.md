@@ -32,7 +32,8 @@ There is nothing to install.
 
 ## What I learned
 
-- I learned to handle form submissions with JavaScript and use `event.preventDefault()` to stop the page from reloading when I add a note.
-- I practiced saving and loading data with `localStorage`. Since it stores text, I used `JSON.stringify()` to save my notes and `JSON.parse()` to read them back.
-- I learned to keep the notes in a data array and call `render()` to update the page whenever that data changes.
-- I used `textContent` instead of `innerHTML` to display note text as plain text, which helps prevent user input from being interpreted as HTML or script.
+- I learned to handle form submissions with JavaScript and use `event.preventDefault()` to prevent the browser's default form submission, which would otherwise reload the page.
+- I practiced saving and loading notes with `localStorage`. Because it stores strings, I used `JSON.stringify()` to save the notes as JSON and `JSON.parse()` to load them back.
+- I learned to keep the notes in an array and call `render()` after changes so the displayed list stays in sync with the data.
+- I used `textContent` to display note text as plain text instead of inserting it as HTML, reducing the risk of cross-site scripting (XSS).
+- I learned to validate notes before saving them by trimming whitespace and rejecting empty notes or notes longer than 200 characters.
