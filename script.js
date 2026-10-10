@@ -3,8 +3,22 @@ const form = document.querySelector("#note-form");
 const noteInput = document.querySelector("#note-input");
 const categorySelect = document.querySelector("#note-category");
 const notesList = document.querySelector("#notes-list");
+const noteCount = document.querySelector("#note-count");
+const errorMessage = document.querySelector("#error-message");
+
+const MAX_LENGTH = 200;
 
 let notes = [];
+
+function updateCount() {
+  if (notes.length === 0) {
+    noteCount.textContent = "You have no notes yet.";
+  } else if (notes.length === 1) {
+    noteCount.textContent = "You have 1 note.";
+  } else {
+    noteCount.textContent = "You have " + notes.length + " notes.";
+  }
+}
 
 function createNoteElement(note) {
   const item = document.createElement("li");
@@ -29,6 +43,7 @@ function createNoteElement(note) {
   deleteButton.type = "button";
   deleteButton.className = "delete-btn";
   deleteButton.textContent = "Delete";
+  deleteButton.addEventListener("click", () => deleteNote(note.id));
 
   meta.append(category, date, deleteButton);
   item.append(text, meta);
@@ -37,22 +52,38 @@ function createNoteElement(note) {
 
 function render() {
   notesList.textContent = "";
+  updateCount();
   notes.forEach((note) => {
     notesList.appendChild(createNoteElement(note));
   });
 }
 
+function deleteNote(id) {
+  notes = notes.filter((note) => note.id !== id);
+  render();
+}
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const note = {
+  const text = noteInput.value.trim();
+
+  if (text === "") {
+    errorMessage.textContent = "Please type a note first.";
+    return;
+  }
+  if (text.length > MAX_LENGTH) {
+    errorMessage.textContent = "Notes must be 200 characters or fewer.";
+    return;
+  }
+
+  errorMessage.textContent = "";
+  notes.push({
     id: Date.now(),
-    text: noteInput.value.trim(),
+    text: text,
     category: categorySelect.value,
     createdAt: new Date().toLocaleString(),
-  };
-
-  notes.push(note);
+  });
   noteInput.value = "";
   render();
 });
